@@ -1,13 +1,13 @@
 <template>
     <div>
-        <div>User vue</div>
+        Blog
     </div>
 </template>
-
 <script>
     export default {
         mounted() {
-            console.log('Component User mounted.')
+            console.log('Blog mounted.')
         }
     }
 </script>
+

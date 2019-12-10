@@ -5,19 +5,11 @@ import VueRouter from 'vue-router';
 
 Vue.use(VueRouter);
 
-
-
-
-
-Vue.component('app-home', require('./AppHome.vue').default);
-
-
+Vue.component('app-home', require('./components/AppHome.vue').default);
 
 const routes = [
-
-
-    { path: '/user', component: require('./components/User.vue').default },
-    { path: '/ex', component: require('./components/ExampleComponent.vue').default }
+    { path: '/blog', component: require('./components/blog/Blog.vue').default },
+    { path: '/carriere', component: require('./components/carriere/Carriere.vue').default }
 ];
 
 const router = new VueRouter({
