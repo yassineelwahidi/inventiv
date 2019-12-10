@@ -1,0 +1,59 @@
+<template>
+
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    Signup
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <input type="text" placeholder="Fullname" v-model="name" class="form-control" >
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <input type="email" placeholder="Email" v-model="email" class="form-control" >
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <input type="password" placeholder="Password" v-model="password" class="form-control" >
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <button @click="register()" class="btn btn-primary" >Register</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+</template>
+
+<script>
+    export default{
+        data(){
+            return{
+                name:'',
+                email:'',
+                password:'',
+            }
+        },
+        methods:{
+            register(){
+                axios.post('/users/register',{name:this.name,email:this.email,password:this.password})
+                    .then(
+                        (response)=>{
+                            console.log(response)
+                        }
+                    )
+                    .catch(
+                        (error)=>{
+                            console.log(error)
+                        }
+                    )
+                console.log(this.name)
+            }
+        }
+    }
+</script>

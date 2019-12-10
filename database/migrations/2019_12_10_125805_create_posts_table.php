@@ -18,8 +18,8 @@ class CreatePostsTable extends Migration
             $table->string('title',255);
             $table->mediumText('text');
             $table->bigInteger('created_by')->unsigned();
-            $table->boolean('is_published');
-            $table->bigInteger('published_by')->unsigned();
+            $table->boolean('is_published')->default(0);
+            $table->bigInteger('published_by')->nullable()->unsigned();
             $table->timestamps();
 
 //            $table->foreign('created_by')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');

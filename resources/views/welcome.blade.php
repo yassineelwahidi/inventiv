@@ -30,14 +30,16 @@
     <body >
     <div id="app">
         <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
-            <h5 class="my-0 mr-md-auto font-weight-normal">Company name</h5>
+            <h5 class="my-0 mr-md-auto font-weight-normal"><a href="/" class="text-decoration-none">Company name</a></h5>
             <nav class="my-2 my-md-0 mr-md-3">
 
                 <router-link to="/blog" class="p-2 text-dark">Blog</router-link>
                 <router-link to="/carriere" class="p-2 text-dark">Carrière</router-link>
 
             </nav>
-            <a class="btn btn-outline-primary" href="#">Sign up</a>
+
+            <router-link to="/login" class="btn btn-outline-primary ml-1">Login</router-link>
+            <router-link to="/signup" class="btn btn-outline-primary ml-1">Sign up</router-link>
         </div>
 
         <div class="container">

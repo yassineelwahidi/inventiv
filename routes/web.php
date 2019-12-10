@@ -15,6 +15,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/maquette', function () {
-    return view('maquette');
-});
+Route::get('/posts', 'PostController@index');
+Route::get('/categories', 'CategoryController@index');
+Route::post('/post/add', 'PostController@store');
+
+Route::post('/users/register', 'UserController@register');

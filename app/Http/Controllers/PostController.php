@@ -14,7 +14,8 @@ class PostController extends Controller
      */
     public function index()
     {
-
+        $posts = Post::with(['categories','createdBy','publishedBy'])->get();
+        return response()->json($posts);
     }
 
     /**
@@ -35,7 +36,18 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $this->validate($request,[
+            'title'=>'required|max:255',
+            'text'=>'required|max:50000',
+            //'created_by'=>'required|exist:users.id',
+        ]);
+        $data['created_by'] = 1;
+        $data['is_published'] = 0;
+        $data['published_by'] = null;
+        $post = Post::create($data);
+
+        $post->categories()->attach($request->categories);
+        return response()->json(['post'=>$post,'categories'=>$request->categories]);
     }
 
     /**

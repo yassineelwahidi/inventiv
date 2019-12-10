@@ -7,7 +7,7 @@ use Faker\Generator as Faker;
 
 $factory->define(Category::class, function (Faker $faker) {
     return [
-        'title'=>$faker->sentence(rand(4,10)),
+        'title'=>$faker->sentence(rand(1,2)),
         'description'=>$faker->paragraph(rand(10,20)),
     ];
 });
