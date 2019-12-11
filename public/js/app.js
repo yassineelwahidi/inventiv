@@ -37995,7 +37995,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [_c("router-view")], 1)
+  return _c("div", [_vm._v("\n    Home page\n")])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -54313,6 +54313,10 @@ var routes = [{
   path: '/logout',
   component: __webpack_require__(/*! ./components/auth/Logout.vue */ "./resources/js/components/auth/Logout.vue")["default"],
   name: 'logout'
+}, {
+  path: '/',
+  component: __webpack_require__(/*! ./components/AppHome.vue */ "./resources/js/components/AppHome.vue")["default"],
+  name: 'home'
 }];
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]({
   routes: routes,

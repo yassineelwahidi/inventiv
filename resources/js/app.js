@@ -19,6 +19,8 @@ const routes = [
     { path: '/login', component: require('./components/auth/Login.vue').default, name:'login' },
     { path: '/signup', component: require('./components/auth/Signup.vue').default, name:'signup' },
     { path: '/logout', component: require('./components/auth/Logout.vue').default, name:'logout' },
+
+    { path: '/', component: require('./components/AppHome.vue').default, name:'home' },
 ];
 
 const router = new VueRouter({
