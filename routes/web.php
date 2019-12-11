@@ -27,6 +27,8 @@ Route::get('/offers', 'OfferController@index');
 Route::post('/offer/add', 'OfferController@store');
 Route::delete('/offer/delete/{offer}', 'OfferController@destroy');
 Route::post('/offer/publish/{id}', 'OfferController@publish');
+Route::get('/offer/edit/{id}', 'OfferController@edit');
+Route::put('/offer/update', 'OfferController@update');
 Route::get('/activities', 'ActivityController@index');
 
 Route::post('/users/register', 'UserController@register')->middleware('guest');

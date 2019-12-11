@@ -26,6 +26,7 @@
                     <div class="text-muted mt-2" v-else>
                         <p><a href="javascript:;" v-on:click="publishOffer(offer.id, index)" :id="'publish'+offer.id" class="btn btn-success mt-3 mr-2">Publish</a></p>
                     </div>
+                    <p><router-link :to="{path:'/offer/edit/'+offer.id,params: { 'offerId':offer.id }}" class="btn btn-primary mt-1">Edit</router-link></p>
                     <p><a href="javascript:;" v-on:click="deleteOffer(offer.id, index)" class="btn btn-danger mt-1">Delete</a></p>
                 </div>
             </div>

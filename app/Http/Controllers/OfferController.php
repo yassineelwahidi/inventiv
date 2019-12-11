@@ -62,4 +62,30 @@ class OfferController extends Controller
             return response()->json(true);
         }
     }
+
+    public function edit($id)
+    {
+        $post = Offer::with('activity')->where('id',$id)->first();
+        return response()->json($post);
+    }
+
+    public function update(Request $request)
+    {
+
+        $this->validate($request,[
+            'title'=>'required|max:255',
+            'text'=>'required|max:50000',
+            'activity_id'=>'required|exists:activities,id',
+        ]);
+
+        $offer = Offer::find($request->id);
+        $offer->title = $request->title;
+        $offer->text = $request->text;
+        $offer->activity_id = $request->activity_id;
+
+        if($offer->update()){
+
+            return response()->json('update-success');
+        }
+    }
 }

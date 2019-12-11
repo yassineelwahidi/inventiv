@@ -14,6 +14,7 @@ const routes = [
 
     { path: '/offers', component: require('./components/carriere/Offers.vue').default },
     { path: '/offer/add', component: require('./components/carriere/Add.vue').default ,name: 'offer.create'},
+    { path: '/offer/edit/:offerId', component: require('./components/carriere/Edit.vue').default ,name: 'offer.edit', props: true},
 
     { path: '/login', component: require('./components/auth/Login.vue').default, name:'login' },
     { path: '/signup', component: require('./components/auth/Signup.vue').default, name:'signup' },
