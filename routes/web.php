@@ -16,7 +16,11 @@ Route::get('/', function () {
 });
 
 Route::get('/posts', 'PostController@index');
-Route::get('/categories', 'CategoryController@index');
 Route::post('/post/add', 'PostController@store');
+Route::delete('/post/delete/{post}', 'PostController@destroy');
+Route::post('/post/publish/{id}', 'PostController@publish');
+Route::get('/categories', 'CategoryController@index');
 
-Route::post('/users/register', 'UserController@register');
+Route::post('/users/register', 'UserController@register')->middleware('guest');
+Route::post('/users/login', 'UserController@login')->middleware('guest');
+Route::get('/users/logout', 'UserController@logout')->middleware('auth');

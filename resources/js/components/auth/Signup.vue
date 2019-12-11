@@ -7,17 +7,20 @@
                 </div>
                 <div class="card-body">
                     <div class="form-group">
-                        <input type="text" placeholder="Fullname" v-model="name" class="form-control" >
+                        <input type="text" placeholder="Fullname" v-model="name" :class="['form-control',{'is-danger':errors.title}]" >
+                        <small v-if="errors.name">{{errors.name[0]}}</small>
                     </div>
                 </div>
                 <div class="card-body">
                     <div class="form-group">
-                        <input type="email" placeholder="Email" v-model="email" class="form-control" >
+                        <input type="email" placeholder="Email" v-model="email" :class="['form-control',{'is-danger':errors.email}]" >
+                        <small v-if="errors.email">{{errors.email[0]}}</small>
                     </div>
                 </div>
                 <div class="card-body">
                     <div class="form-group">
-                        <input type="password" placeholder="Password" v-model="password" class="form-control" >
+                        <input type="password" placeholder="Password" v-model="password" :class="['form-control',{'is-danger':errors.password}]" >
+                        <small v-if="errors.password">{{errors.password[0]}}</small>
                     </div>
                 </div>
                 <div class="card-body">
@@ -37,6 +40,7 @@
                 name:'',
                 email:'',
                 password:'',
+                errors:{},
             }
         },
         methods:{
@@ -44,15 +48,17 @@
                 axios.post('/users/register',{name:this.name,email:this.email,password:this.password})
                     .then(
                         (response)=>{
-                            console.log(response)
+                            if(response.data.logged == true){
+                                //this.$router.push('/blog');
+                                window.location.href = "/#/blog";
+                            }
                         }
                     )
                     .catch(
                         (error)=>{
-                            console.log(error)
+                            this.errors = error.response.data.errors
                         }
                     )
-                console.log(this.name)
             }
         }
     }

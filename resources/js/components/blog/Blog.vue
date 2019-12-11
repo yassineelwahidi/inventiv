@@ -18,8 +18,12 @@
                             Crée par: <span class="badge badge-secondary ml-1 p-2">{{post.created_by.name}}</span>
                         </div>
                         <div class="text-muted mt-2" v-if="post.published_by != null">
-                            Publié par: <span class="badge badge-secondary ml-1 p-2">{{post.published_by.name}}</span>
+                            Publié par: <span class="badge badge-secondary ml-1 p-2 whospub">{{post.published_by.name}}</span>
                         </div>
+                    <div class="text-muted mt-2" v-else>
+                        <p><a href="javascript:;" v-on:click="publishPost(post.id, index)" :id="'publish'+post.id" class="btn btn-success mt-3 mr-2">Publish</a></p>
+                    </div>
+                    <p><a href="javascript:;" v-on:click="deletePost(post.id, index)" class="btn btn-danger mt-1">Delete</a></p>
                 </div>
             </div>
         </div>
@@ -43,6 +47,29 @@
                     }).catch(err => {
                         console.log(err)
                     })
+                },
+                deletePost(postid,index){
+                    axios.delete('/post/delete/'+postid)
+                        .then(resp => {
+                            if(resp.data == true)
+                                this.posts.splice(index, 1)
+                        })
+                        .catch(error => {
+                            console.log(error);
+                        })
+                },
+                publishPost(postid,index){
+                    axios.post('/post/publish/'+postid)
+                        .then(resp => {
+                            if(resp.data == true){
+
+                                this.posts[index].published_by = true;
+                                document.querySelector('.whospub').innerText = "Vous meme";
+                            }
+                        })
+                        .catch(error => {
+                            console.log(error);
+                        })
                 }
             }
     }

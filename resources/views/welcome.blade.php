@@ -37,9 +37,13 @@
                 <router-link to="/carriere" class="p-2 text-dark">Carrière</router-link>
 
             </nav>
+            @guest
+                <router-link to="/login" class="btn btn-outline-primary ml-1">Login</router-link>
+                <router-link to="/signup" class="btn btn-outline-primary ml-1">Sign up</router-link>
+            @else
+                <router-link to="/logout" class="btn btn-outline-primary ml-1">Logout</router-link>
+            @endguest
 
-            <router-link to="/login" class="btn btn-outline-primary ml-1">Login</router-link>
-            <router-link to="/signup" class="btn btn-outline-primary ml-1">Sign up</router-link>
         </div>
 
         <div class="container">

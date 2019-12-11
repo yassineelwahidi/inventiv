@@ -6,6 +6,7 @@
                 Login
             </div>
             <div class="card-body">
+                {{message}}
                 <div class="form-group">
                     <input type="email" placeholder="Email" v-model="email" class="form-control" >
                 </div>
@@ -31,11 +32,24 @@
             return{
                 email:'',
                 password:'',
+                message : ''
             }
         },
         methods:{
             login(){
-                console.log(this.name)
+                axios.post('/users/login',{email:this.email,password:this.password})
+                    .then(
+                        (response)=>{
+                            if(response.data.logged == true)
+                                window.location.href = "/#/blog";
+                            else this.message = 'data mismatch';
+                        }
+                    )
+                    .catch(
+                        (error)=>{
+                            this.errors = error.response.data
+                        }
+                    )
             }
         }
     }

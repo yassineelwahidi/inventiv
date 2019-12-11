@@ -47,11 +47,12 @@
                 .then(
                     (response)=> {
                         console.log(response)
-                    this.list = {
-                        title:'',
-                        text:'',
-                        categories:[],
-                    }
+                        this.list = {
+                            title:'',
+                            text:'',
+                            categories:[],
+                        }
+                        this.$router.push('/blog')
                 }
                 ).catch(
                 (error)=>{

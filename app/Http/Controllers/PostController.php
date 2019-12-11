@@ -8,40 +8,31 @@ use Illuminate\Http\Request;
 class PostController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of posts.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $posts = Post::with(['categories','createdBy','publishedBy'])->get();
+        $posts = Post::with(['categories','createdBy','publishedBy'])->orderBy('id','desc')->get();
         return response()->json($posts);
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
+     * Store a new post.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
+        $request['created_by'] = auth()->user()->id;
         $data = $this->validate($request,[
             'title'=>'required|max:255',
             'text'=>'required|max:50000',
-            //'created_by'=>'required|exist:users.id',
+            'created_by'=>'required|exists:users,id',
         ]);
-        $data['created_by'] = 1;
+        $data['created_by'] = auth()->user()->id;
         $data['is_published'] = 0;
         $data['published_by'] = null;
         $post = Post::create($data);
@@ -51,47 +42,24 @@ class PostController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Post  $post
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Post $post)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Post  $post
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Post $post)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Post  $post
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Post $post)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
+     * Remove the specified post.
      *
      * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
      */
     public function destroy(Post $post)
     {
-        //
+         $e = $post->delete();
+        return response()->json($e);
+    }
+
+    public function publish($id)
+    {
+        $post = Post::find($id);
+        $post->is_published = true;
+        $post->published_by = auth()->user()->id;
+        if($post->update()){
+            return response()->json(true);
+        }
     }
 }
