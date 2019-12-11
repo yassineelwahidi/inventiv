@@ -8,78 +8,58 @@ use Illuminate\Http\Request;
 class OfferController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of offers.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        //
+        $offers = Offer::with(['activity','createdBy','publishedBy'])->orderBy('id','desc')->get();
+        return response()->json($offers);
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
+     * Store a new offer.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        //
+        $request['created_by'] = auth()->user()->id;
+        $data = $this->validate($request,[
+            'title'=>'required|max:255',
+            'text'=>'required|max:50000',
+            'created_by'=>'required|exists:users,id',
+        ]);
+        $data['created_by'] =  $request['created_by'];
+        $data['is_published'] = 0;
+        $data['published_by'] = null;
+        $data['activity_id'] = $request->activity;
+        $offer = Offer::create($data);
+
+        return response()->json(['offer'=>$offer]);
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Offer  $offer
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Offer $offer)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Offer  $offer
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Offer $offer)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Offer  $offer
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Offer $offer)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
+     * Remove the specified offer.
      *
      * @param  \App\Offer  $offer
      * @return \Illuminate\Http\Response
      */
     public function destroy(Offer $offer)
     {
-        //
+        $e = $offer->delete();
+        return response()->json($e);
+    }
+
+    public function publish($id)
+    {
+        $offer = Offer::find($id);
+        $offer->is_published = true;
+        $offer->published_by = auth()->user()->id;
+        if($offer->update()){
+            return response()->json(true);
+        }
     }
 }
