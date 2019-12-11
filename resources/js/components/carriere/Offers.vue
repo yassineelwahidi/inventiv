@@ -1,5 +1,6 @@
 <template>
     <div>
+        <h3>Offers page</h3>
         <div class="mb-3 text-right">
             <router-link to="/offer/add" class="btn btn-secondary pull-right">Add new offer</router-link>
         </div>

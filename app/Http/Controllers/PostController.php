@@ -62,4 +62,27 @@ class PostController extends Controller
             return response()->json(true);
         }
     }
+
+    public function edit($id)
+    {
+        $post = Post::with('categories')->where('id',$id)->first();
+        return response()->json($post);
+    }
+
+    public function update(Request $request)
+    {
+
+        $data = $this->validate($request,[
+            'title'=>'required|max:255',
+            'text'=>'required|max:50000',
+        ]);
+
+        $post = Post::find($request->id);
+        $post->title = $request->title;
+        $post->text = $request->text;
+        $post->update();
+
+        $post->categories()->sync($request->categories);
+        return response()->json('update-success');
+    }
 }

@@ -1,6 +1,6 @@
 <template>
     <div>
-
+        <h3>Add Offer Page</h3>
         <div class="form-group">
             <label class="label" for="title">Title</label>
             <input :class="['input form-control',{'is-danger':errors.title}]" id="title"   type="text" placeholder="Title" v-model="list.title">

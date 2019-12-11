@@ -1,5 +1,6 @@
 <template>
     <div>
+        <h3>Posts page</h3>
         <div class="mb-3 text-right">
             <router-link to="/post/add" class="btn btn-secondary pull-right">Add new post</router-link>
         </div>
@@ -25,6 +26,7 @@
                         <div class="text-muted mt-2" v-else>
                             <p><a href="javascript:;" v-on:click="publishPost(post.id, index)" :id="'publish'+post.id" class="btn btn-success mt-3 mr-2">Publish</a></p>
                         </div>
+                    <p><router-link :to="{path:'/post/edit/'+post.id,params: { 'postId':post.id }}" class="btn btn-primary mt-1">Edit</router-link></p>
                     <p><a href="javascript:;" v-on:click="deletePost(post.id, index)" class="btn btn-danger mt-1">Delete</a></p>
                 </div>
             </div>

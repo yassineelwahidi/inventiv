@@ -1,18 +1,22 @@
 <template>
     <div>
-        <h3>Add Post Page</h3>
+        <div class="alert alert-success" v-if="updated">
+            <h3>Data Updated succefully</h3>
+        </div>
+        <h3>Edit Post Page</h3>
         <div class="form-group">
             <label class="label" for="title">Title</label>
-            <input :class="['input form-control',{'is-danger':errors.title}]" id="title"   type="text" placeholder="Title" v-model="list.title">
+            <input :class="['input form-control',{'is-danger':errors.title}]" id="title"   type="text" placeholder="Title" v-model="post.title" >
             <small v-if="errors.title">{{errors.title[0]}}</small>
         </div>
         <div class="form-group">
             <label class="label" for="text">Text</label>
 
-            <textarea  id="text" :class="[{'is-danger':errors.text},'input form-control']"  placeholder="Text" v-model="list.text"></textarea>
+            <textarea  id="text" :class="[{'is-danger':errors.text},'input form-control']"  placeholder="Text" v-model="post.text"></textarea>
             <small v-if="errors.text">{{errors.text[0]}}</small>
         </div>
         <div class="form-group" >
+
             <div><h3>Categories</h3></div>
             <div v-for="(cats,index) in categories">
                 <div class="form-check form-check-inline">
@@ -31,6 +35,7 @@
 
 <script>
     export default{
+        props: ['postId'],
         data(){
             return{
                 list:{
@@ -39,24 +44,33 @@
                     categories:[],
                 },
                 errors:{},
-                categories:''
+                categories:'',
+                post:{},
+                isChecked:true,
+                updated:false
             }
         },
         created(){
           this.getAllCategories();
+
+        },
+        mounted(){
+            this.fetchPost();
         },
         methods:{
             save(){
-                axios.post('/post/add',this.list)
+                axios.put('/post/update',{
+                    'id':this.post.id,
+                    'title':this.post.title,
+                    'text':this.post.text,
+                    'categories':this.list.categories
+                })
                 .then(
                     (response)=> {
-                        console.log(response)
-                        this.list = {
-                            title:'',
-                            text:'',
-                            categories:[],
+                        console.log(response.data)
+                        if(response.data == 'update-success'){
+                            this.updated = true;
                         }
-                        this.$router.push('/blog')
                 }
                 ).catch(
                 (error)=>{
@@ -75,7 +89,13 @@
                         console.log(error)
                     }
                 );
-            }
+            },
+            fetchPost() {
+                axios.get('/post/edit/'+this.postId)
+                    .then(
+                        response => {this.post = response.data;console.log(this.post)}
+                    ).catch(error => console.log('Has error'));
+            },
 
         }
     }

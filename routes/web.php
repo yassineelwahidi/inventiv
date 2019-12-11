@@ -19,6 +19,8 @@ Route::get('/posts', 'PostController@index');
 Route::post('/post/add', 'PostController@store');
 Route::delete('/post/delete/{post}', 'PostController@destroy');
 Route::post('/post/publish/{id}', 'PostController@publish');
+Route::get('/post/edit/{id}', 'PostController@edit');
+Route::put('/post/update', 'PostController@update');
 Route::get('/categories', 'CategoryController@index');
 
 Route::get('/offers', 'OfferController@index');

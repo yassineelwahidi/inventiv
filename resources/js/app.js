@@ -10,6 +10,7 @@ Vue.component('app-home', require('./components/AppHome.vue').default);
 const routes = [
     { path: '/blog', component: require('./components/blog/Blog.vue').default },
     { path: '/post/add', component: require('./components/blog/Add.vue').default ,name: 'post.create'},
+    { path: '/post/edit/:postId', component: require('./components/blog/Edit.vue').default ,name: 'post.edit', props: true},
 
     { path: '/offers', component: require('./components/carriere/Offers.vue').default },
     { path: '/offer/add', component: require('./components/carriere/Add.vue').default ,name: 'offer.create'},
